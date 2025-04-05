@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:delivery/core/core.dart';
+import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
+
 
 class OnboardingPage extends StatelessWidget {
   static const String routePath = '/onboarding';
@@ -72,7 +75,13 @@ class OnboardingNextButton extends StatelessWidget {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
         return ElevatedButton(
-          onPressed: () => context.read<OnboardingBloc>().add(NextSlideEvent()),
+          onPressed: () {
+            if (state.currentIndex == slides.length - 1) {
+              AppNavigation(router: appRouter).replaceNamed(LoginPage.routeName);
+            } else {
+              context.read<OnboardingBloc>().add(NextSlideEvent());
+            }
+          },
           style: ButtonStyle(
             backgroundColor: WidgetStatePropertyAll<Color>(Color(0xFFFF7622)),
             minimumSize: WidgetStatePropertyAll<Size>(

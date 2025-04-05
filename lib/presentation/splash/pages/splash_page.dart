@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:delivery/core/core.dart';
+import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
 
 class SplashPage extends StatelessWidget {
@@ -24,7 +25,7 @@ class SplashPage extends StatelessWidget {
             height: MediaQuery.of(context).size.height,
             child: GestureDetector(
               onTap: () {
-                appRouter.go(OnboardingPage.routePath);
+                AppNavigation(router: appRouter).replaceNamed(OnboardingPage.routeName);
               },
               child: Image.asset(AppImages.logoApp, height: 59,)),
           ),
