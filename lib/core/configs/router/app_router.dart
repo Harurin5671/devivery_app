@@ -15,5 +15,15 @@ final GoRouter appRouter = GoRouter(
       name: OnboardingPage.routeName,
       builder: (context, state) => const OnboardingPage(),
     ),
+    GoRoute(
+      path: LoginPage.routePath,
+      name: LoginPage.routeName,
+      builder: (context, state) => const LoginPage(),
+    ),
+    GoRoute(
+      path: SignupPage.routePath,
+      name: SignupPage.routeName,
+      builder: (context, state) => const SignupPage(),
+    ),
   ],
 );
