@@ -17,7 +17,26 @@ class SignupPage extends StatelessWidget {
       showBackButton: true,
       onBackTap: () => AppNavigation(router: appRouter).pop(),
       subtitle: 'Please sign up to get started',
-      child: const Placeholder(),
+      child: Form(
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              LabeledInputField(label: 'name'),
+              const SizedBox(height: 24),
+              LabeledInputField(
+                label: 'email',
+                type: TextInputType.emailAddress,
+              ),
+              const SizedBox(height: 24),
+              LabeledInputField(label: 'password', obscureText: true),
+              const SizedBox(height: 24),
+              LabeledInputField(label: 're-type password', obscureText: true),
+              const SizedBox(height: 30,),
+              AuthFormButton(text: 'Sign up', onPressed: () {}),
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
