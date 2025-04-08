@@ -12,7 +12,7 @@ class SplashPage extends StatelessWidget {
 
   void _redirect(BuildContext context) {
     Future.delayed(const Duration(seconds: 2), () {
-      AppNavigation(router: appRouter).replaceNamed(OnboardingPage.routeName);
+      AppNavigation().replaceNamed(OnboardingPage.routeName);
     });
   }
 

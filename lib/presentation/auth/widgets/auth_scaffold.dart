@@ -1,6 +1,7 @@
-import 'package:delivery/common/common.dart';
 import 'package:flutter/material.dart';
+
 import 'package:delivery/core/core.dart';
+import 'package:delivery/common/common.dart';
 
 class AuthScaffold extends StatelessWidget {
   final String title;
@@ -46,7 +47,7 @@ class AuthScaffold extends StatelessWidget {
                         top: 16,
                         left: 16,
                         child: GestureDetector(
-                          onTap: onBackTap ?? () => AppNavigation(router: appRouter).pop(),
+                          onTap: onBackTap ?? () => AppNavigation().pop(),
                           child:  Container(
                             height: 45,
                             width: 45,
