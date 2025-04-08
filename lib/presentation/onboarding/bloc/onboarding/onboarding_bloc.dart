@@ -1,7 +1,6 @@
-import 'dart:developer';
+import 'package:flutter/material.dart';
 
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'onboarding_event.dart';
@@ -17,19 +16,16 @@ class OnboardingBloc extends Bloc<OnboardingEvent, OnboardingState> {
     on<SkipToLastSlideEvent>(_onSkipToLastSlide);
   }
   _onSlideChanged(SlideChangedEvent event, Emitter<OnboardingState> emit) {
-    log('Current index: ${event.index}');
     emit(state.copyWith(currentIndex: event.index));
   }
 
   _onNextSlide(NextSlideEvent event, Emitter<OnboardingState> emit) {
     final currentIndex = state.currentIndex;
-    log('Total slides: ${state.totalSlides}');
     if (currentIndex < state.totalSlides - 1) {
       pageController.nextPage(
         duration: Duration(milliseconds: 300),
         curve: Curves.easeInOut,
       );
-      log('Current index: $currentIndex');
       emit(state.copyWith(currentIndex: currentIndex + 1));
     }
   }

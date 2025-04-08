@@ -2,7 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:delivery/core/core.dart';
+import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
+
 
 class OnboardingPage extends StatelessWidget {
   static const String routePath = '/onboarding';
@@ -15,23 +18,26 @@ class OnboardingPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => OnboardingBloc(totalSlides: slides.length),
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.only(
-            top: 100,
-            bottom: 40,
-            left: 24,
-            right: 24,
-          ),
-          child: Column(
-            children: [
-              OnboardingSlides(slides: slides),
-              const SizedBox(height: 32),
-              OnboardingProgressDots(),
-              const SizedBox(height: 69),
-              OnboardingNextButton(),
-              const SizedBox(height: 16),
-              OnboardingSkipButton(),
-            ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              // top: 100,
+              // bottom: 40,
+              left: 24,
+              right: 24,
+            ),
+            child: Column(
+              children: [
+                OnboardingSlides(slides: slides),
+                // const SizedBox(height: 10),
+                OnboardingProgressDots(),
+                const SizedBox(height: 30),
+                OnboardingNextButton(),
+                const SizedBox(height: 16),
+                OnboardingSkipButton(),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),
@@ -72,7 +78,13 @@ class OnboardingNextButton extends StatelessWidget {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
         return ElevatedButton(
-          onPressed: () => context.read<OnboardingBloc>().add(NextSlideEvent()),
+          onPressed: () {
+            if (state.currentIndex == slides.length - 1) {
+              AppNavigation(router: appRouter).replaceNamed(LoginPage.routeName);
+            } else {
+              context.read<OnboardingBloc>().add(NextSlideEvent());
+            }
+          },
           style: ButtonStyle(
             backgroundColor: WidgetStatePropertyAll<Color>(Color(0xFFFF7622)),
             minimumSize: WidgetStatePropertyAll<Size>(
