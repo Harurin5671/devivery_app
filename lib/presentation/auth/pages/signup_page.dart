@@ -31,7 +31,10 @@ class SignupPage extends StatelessWidget {
               const SizedBox(height: 24),
               LabeledInputField(label: 're-type password', obscureText: true),
               const SizedBox(height: 30,),
-              AuthFormButton(text: 'Sign up', onPressed: () {}),
+              // AuthFormButton(text: 'Sign up', onPressed: () {}),
+               AppButton(text: 'Sign Up', onPressed: (){
+                // AppNavigation().pushNamed(LocationPermissionPage.routeName);
+              }),
             ],
           ),
         ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
 
 class VerificationPage extends StatelessWidget {
@@ -19,7 +20,10 @@ class VerificationPage extends StatelessWidget {
           children: [
             AuthOtpInput(),
             const SizedBox(height: 30),
-            AuthFormButton(text: 'Verify', onPressed: () {}),
+            // AuthFormButton(text: 'Verify', onPressed: () {}),
+            AppButton(text: 'Verify', onPressed: (){
+              // AppNavigation().pushNamed(LocationPermissionPage.routeName);
+            }),
           ],
         ),
       ),

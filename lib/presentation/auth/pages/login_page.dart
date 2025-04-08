@@ -65,7 +65,12 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              AuthFormButton(text: 'Log In', onPressed: () {}),
+              // AuthFormButton(text: 'Log In', onPressed: () {
+              //   AppNavigation().pushNamed(LocationPermissionPage.routeName);
+              // }),
+              AppButton(text: 'log in', onPressed: (){
+                AppNavigation().pushNamed(LocationPermissionPage.routeName);
+              }),
               const SizedBox(height: 30),
               // Spacer(),
               Row(
