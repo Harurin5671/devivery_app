@@ -19,9 +19,12 @@ class LoginPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              LabeledInputField(label: 'email'),
+              LabeledInputField(
+                label: 'email',
+                type: TextInputType.emailAddress,
+              ),
               const SizedBox(height: 24),
-              LabeledInputField(label: 'password'),
+              LabeledInputField(label: 'password', obscureText: true),
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -51,36 +54,19 @@ class LoginPage extends StatelessWidget {
                       ),
                     ],
                   ),
-                  Text(
-                    'Forgot Password',
-                    style: TextStyle(fontSize: 14, color: Color(0xFFFF7622)),
+                  GestureDetector(
+                    onTap: () {
+                      AppNavigation(router: appRouter).pushNamed(ForgotPasswordPage.routeName);
+                    },
+                    child: Text(
+                      'Forgot Password',
+                      style: TextStyle(fontSize: 14, color: Color(0xFFFF7622)),
+                    ),
                   ),
                 ],
               ),
               const SizedBox(height: 30),
-              ElevatedButton(
-                onPressed: () {},
-                style: ButtonStyle(
-                  backgroundColor: WidgetStatePropertyAll(Color(0xFFFF7622)),
-                  foregroundColor: WidgetStatePropertyAll(Colors.white),
-                  shape: WidgetStatePropertyAll(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  minimumSize: WidgetStatePropertyAll(
-                    Size(double.infinity, 62),
-                  ),
-                ),
-                child: Text(
-                  'Log In',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ),
+              AuthFormButton(text: 'Log In', onPressed: () {}),
               const SizedBox(height: 30),
               // Spacer(),
               Row(
@@ -114,4 +100,3 @@ class LoginPage extends StatelessWidget {
     );
   }
 }
-
