@@ -18,23 +18,26 @@ class OnboardingPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => OnboardingBloc(totalSlides: slides.length),
       child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.only(
-            top: 100,
-            bottom: 40,
-            left: 24,
-            right: 24,
-          ),
-          child: Column(
-            children: [
-              OnboardingSlides(slides: slides),
-              const SizedBox(height: 32),
-              OnboardingProgressDots(),
-              const SizedBox(height: 69),
-              OnboardingNextButton(),
-              const SizedBox(height: 16),
-              OnboardingSkipButton(),
-            ],
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.only(
+              // top: 100,
+              // bottom: 40,
+              left: 24,
+              right: 24,
+            ),
+            child: Column(
+              children: [
+                OnboardingSlides(slides: slides),
+                // const SizedBox(height: 10),
+                OnboardingProgressDots(),
+                const SizedBox(height: 30),
+                OnboardingNextButton(),
+                const SizedBox(height: 16),
+                OnboardingSkipButton(),
+                const SizedBox(height: 16),
+              ],
+            ),
           ),
         ),
       ),

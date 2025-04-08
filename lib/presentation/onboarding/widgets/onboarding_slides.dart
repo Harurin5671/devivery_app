@@ -26,18 +26,18 @@ class OnboardingSlides extends StatelessWidget {
             children: [
               Container(
                 width: 240,
-                height: 292,
+                height: 240,
                 decoration: BoxDecoration(
                   color: const Color(0xFF98A8B8),
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              const SizedBox(height: 63),
+              const SizedBox(height: 43),
               Text(
                 slide.title,
                 style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
               ),
-              const SizedBox(height: 18),
+              const SizedBox(height: 12),
               Text(
                 slide.description,
                 style: TextStyle(fontSize: 16),
