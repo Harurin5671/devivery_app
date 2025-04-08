@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:delivery/core/core.dart';
+import 'package:delivery/presentation/presentation.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
+  setupServiceLocator();
   runApp(const MyApp());
 }
 
@@ -16,9 +20,12 @@ class MyApp extends StatelessWidget {
     SystemChrome.setSystemUIOverlayStyle(
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
-    return MaterialApp.router(
-      debugShowCheckedModeBanner: false,
-     routerConfig: appRouter,
+    return MultiBlocProvider(
+      providers: [BlocProvider(create: (context) => locator<LocationBloc>())],
+      child: MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: appRouter,
+      ),
     );
   }
 }

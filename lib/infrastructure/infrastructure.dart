@@ -1,0 +1,1 @@
+export 'services/geolocator_service.dart';

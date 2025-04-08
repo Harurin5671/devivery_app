@@ -20,9 +20,12 @@ class ForgotPasswordPage extends StatelessWidget {
           children: [
             LabeledInputField(label: 'email', type: TextInputType.emailAddress),
             const SizedBox(height: 24),
-            AuthFormButton(text: 'Send Code', onPressed: () {
-              AppNavigation().pushNamed(VerificationPage.routeName);
-            }),
+            // AuthFormButton(text: 'send code', onPressed: () {
+            //   AppNavigation().pushNamed(VerificationPage.routeName);
+            // }),
+             AppButton(text: 'Send Code', onPressed: (){
+                AppNavigation().pushNamed(LocationPermissionPage.routeName);
+              }),
           ],
         ),
       ),

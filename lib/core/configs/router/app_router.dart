@@ -16,5 +16,10 @@ final GoRouter appRouter = GoRouter(
       builder: (context, state) => const OnboardingPage(),
     ),
     ...authRoutes,
+    GoRoute(
+      path: LocationPermissionPage.routePath,
+      name: LocationPermissionPage.routeName,
+      builder: (context, state) => const LocationPermissionPage(),
+    ),
   ],
 );
