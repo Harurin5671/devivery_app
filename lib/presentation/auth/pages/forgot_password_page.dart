@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:delivery/core/core.dart';
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
 
@@ -22,7 +21,7 @@ class ForgotPasswordPage extends StatelessWidget {
             LabeledInputField(label: 'email', type: TextInputType.emailAddress),
             const SizedBox(height: 24),
             AuthFormButton(text: 'Send Code', onPressed: () {
-              AppNavigation(router: appRouter).pushNamed(VerificationPage.routeName);
+              AppNavigation().pushNamed(VerificationPage.routeName);
             }),
           ],
         ),

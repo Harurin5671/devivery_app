@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:delivery/core/core.dart';
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
 
@@ -80,7 +79,7 @@ class OnboardingNextButton extends StatelessWidget {
         return ElevatedButton(
           onPressed: () {
             if (state.currentIndex == slides.length - 1) {
-              AppNavigation(router: appRouter).replaceNamed(LoginPage.routeName);
+              AppNavigation().replaceNamed(LoginPage.routeName);
             } else {
               context.read<OnboardingBloc>().add(NextSlideEvent());
             }

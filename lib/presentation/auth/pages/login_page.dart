@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'package:delivery/core/core.dart';
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
 
@@ -56,7 +55,7 @@ class LoginPage extends StatelessWidget {
                   ),
                   GestureDetector(
                     onTap: () {
-                      AppNavigation(router: appRouter).pushNamed(ForgotPasswordPage.routeName);
+                      AppNavigation().pushNamed(ForgotPasswordPage.routeName);
                     },
                     child: Text(
                       'Forgot Password',
@@ -79,9 +78,7 @@ class LoginPage extends StatelessWidget {
                   const SizedBox(width: 10),
                   GestureDetector(
                     onTap:
-                        () => AppNavigation(
-                          router: appRouter,
-                        ).pushNamed(SignupPage.routeName),
+                        () => AppNavigation().pushNamed(SignupPage.routeName),
                     child: Text(
                       'SIGN UP',
                       style: TextStyle(
