@@ -36,9 +36,10 @@ class LocationPermissionPage extends StatelessWidget {
         }
 
         if (state is LocationLoaded) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Ubicación obtenida: ${state.address}')),
-          );
+          // ScaffoldMessenger.of(context).showSnackBar(
+          //   SnackBar(content: Text('Ubicación obtenida: ${state.address}')),
+          // );
+          AppNavigation().replaceNamed(HomePage.routeName);
 
           // Aquí podrías redirigir a la home o siguiente paso
           // AppNavigation(router: appRouter).replaceNamed(HomePage.routeName);
