@@ -5,9 +5,10 @@ class HomePage extends StatelessWidget {
   static const String routeName = 'home_page';
 
   const HomePage({super.key});
-
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      body: const Placeholder(),
+    );
   }
 }

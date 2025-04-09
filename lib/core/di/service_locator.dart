@@ -7,6 +7,9 @@ import 'package:delivery/infrastructure/infrastructure.dart';
 final locator = GetIt.instance;
 
 void setupServiceLocator() {
+  locator.registerLazySingleton<LocalStorageService>(
+    () => SharedPreferenceService(),
+  );
   // Registramos la implementación de la interfaz LocationService
   locator.registerLazySingleton<LocationService>(() => GeolocatorService());
 

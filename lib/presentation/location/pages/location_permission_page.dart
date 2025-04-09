@@ -4,8 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
-// import 'package:delivery/domain/domain.dart';
-// import 'package:delivery/infrastructure/infrastructure.dart';
 
 class LocationPermissionPage extends StatelessWidget {
   static const String routePath = '/location_permission';
@@ -17,6 +15,10 @@ class LocationPermissionPage extends StatelessWidget {
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
         print('State: $state');
+        if (state is LocationInitial) {
+          context.read<LocationBloc>().add(CheckLocationStatusEvent());
+        }
+
         if (state is LocationPermissionDenied) {
           ScaffoldMessenger.of(
             context,
@@ -36,13 +38,7 @@ class LocationPermissionPage extends StatelessWidget {
         }
 
         if (state is LocationLoaded) {
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //   SnackBar(content: Text('Ubicación obtenida: ${state.address}')),
-          // );
           AppNavigation().replaceNamed(HomePage.routeName);
-
-          // Aquí podrías redirigir a la home o siguiente paso
-          // AppNavigation(router: appRouter).replaceNamed(HomePage.routeName);
         }
       },
       child: Scaffold(
@@ -66,11 +62,6 @@ class LocationPermissionPage extends StatelessWidget {
                   iconPosition: AppButtonIconPosition.right,
                   text: 'Access Location',
                   onPressed: () async {
-                    // final status = await GeolocatorService().requestPermission();
-                    // if(status == LocationPermissionStatus.granted) {
-                    //   // final location = await GeolocatorService().getCurrentLocation();
-                    //   // final address = await GeolocatorService().getAddressFromCoordinates(location.latitude, location.longitude);
-                    // }
                     context.read<LocationBloc>().add(
                       CheckLocationStatusEvent(),
                     );

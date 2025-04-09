@@ -24,6 +24,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     CheckLocationStatusEvent event,
     Emitter<LocationState> emit,
   ) async {
+    print('State: $state');
     emit(LocationLoading());
     final serviceEnabled = await locationService.isLocationServiceEnabled();
     if (!serviceEnabled) {
@@ -33,6 +34,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     }
 
     final permission = await locationService.checkPermission();
+    print('permission: $permission');
     if (permission == LocationPermissionStatus.denied) {
       add(RequestLocationPermissionEvent());
       print(2);
@@ -45,8 +47,10 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
       return;
     }
 
-    final location = await locationService.getCurrentLocation();
-    _emitLocationUpdate(emit: emit, location: location);
+    if (permission == LocationPermissionStatus.granted) {
+      final location = await locationService.getCurrentLocation();
+      await _emitLocationUpdate(emit: emit, location: location);
+    }
   }
 
   Future<void> _onRequestPermission(
@@ -54,7 +58,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     Emitter<LocationState> emit,
   ) async {
     final status = await locationService.requestPermission();
-    print('status: $status');
     if (status == LocationPermissionStatus.granted) {
       final location = await locationService.getCurrentLocation();
       await _emitLocationUpdate(emit: emit, location: location);
@@ -92,11 +95,11 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     required Emitter<LocationState> emit,
     required LocationData location,
   }) async {
-    final address = await locationService.getAddressFromCoordinates(
-      location.latitude,
-      location.longitude,
-    );
-    if (!emit.isDone) {
+    try {
+      final address = await locationService.getAddressFromCoordinates(
+        location.latitude,
+        location.longitude,
+      );
       emit(
         LocationLoaded(
           latitude: location.latitude,
@@ -104,6 +107,8 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
           address: address,
         ),
       );
+    } catch (e) {
+      emit(LocationError('Error retrieving location'));
     }
   }
 
