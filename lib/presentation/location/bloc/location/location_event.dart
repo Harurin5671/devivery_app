@@ -11,6 +11,8 @@ final class CheckLocationStatusEvent extends LocationEvent {}
 
 final class RequestLocationPermissionEvent extends LocationEvent {}
 
+final class GetLocationEvent extends LocationEvent {}
+
 final class StartLocationTrackingEvent extends LocationEvent {}
 
 final class StopLocationTrackingEvent extends LocationEvent {}

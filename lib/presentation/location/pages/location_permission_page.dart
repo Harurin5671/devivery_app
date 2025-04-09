@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:delivery/core/core.dart';
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
+import 'package:delivery/infrastructure/infrastructure.dart';
 
 class LocationPermissionPage extends StatelessWidget {
   static const String routePath = '/location_permission';
@@ -14,7 +16,6 @@ class LocationPermissionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
-        print('State: $state');
         if (state is LocationInitial) {
           context.read<LocationBloc>().add(CheckLocationStatusEvent());
         }
@@ -37,7 +38,7 @@ class LocationPermissionPage extends StatelessWidget {
           );
         }
 
-        if (state is LocationLoaded) {
+        if (state is LocationPermissionGranted) {
           AppNavigation().replaceNamed(HomePage.routeName);
         }
       },
@@ -62,8 +63,27 @@ class LocationPermissionPage extends StatelessWidget {
                   iconPosition: AppButtonIconPosition.right,
                   text: 'Access Location',
                   onPressed: () async {
-                    context.read<LocationBloc>().add(
-                      CheckLocationStatusEvent(),
+                    // final bloc = context.read<LocationBloc>();
+                    // await SharedPreferenceService().writeBool(Keys.onBoardingCompleteKey, true);
+                    // bloc.add(
+                    //   RequestLocationPermissionEvent(),
+                    // );
+                    await safelyExecuteWithContext(
+                      context: context,
+                      actions: [
+                        () => SharedPreferenceService().writeBool(
+                          Keys.onBoardingCompleteKey,
+                          true,
+                        ),
+                        () async => await Future.delayed(
+                          Duration(milliseconds: 300),
+                        ), // otra async si necesitas
+                      ],
+                      onSafeContextUse: (ctx) {
+                        ctx.read<LocationBloc>().add(
+                          RequestLocationPermissionEvent(),
+                        );
+                      },
                     );
                   },
                 ),

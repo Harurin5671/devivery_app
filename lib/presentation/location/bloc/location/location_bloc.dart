@@ -13,6 +13,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   LocationBloc(this.locationService) : super(LocationInitial()) {
     on<CheckLocationStatusEvent>(_onCheckStatus);
     on<RequestLocationPermissionEvent>(_onRequestPermission);
+    on<GetLocationEvent>(_onGetLocation);
     on<StartLocationTrackingEvent>(_onStartTracking);
     on<StopLocationTrackingEvent>(_onStopTracking);
   }
@@ -24,32 +25,27 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     CheckLocationStatusEvent event,
     Emitter<LocationState> emit,
   ) async {
-    print('State: $state');
     emit(LocationLoading());
     final serviceEnabled = await locationService.isLocationServiceEnabled();
     if (!serviceEnabled) {
       emit(LocationServiceDisabled());
-      print(1);
       return;
     }
 
     final permission = await locationService.checkPermission();
-    print('permission: $permission');
+    print('Permission: $permission');
     if (permission == LocationPermissionStatus.denied) {
-      add(RequestLocationPermissionEvent());
-      print(2);
+      emit(LocationPermissionDenied());
       return;
     }
 
     if (permission == LocationPermissionStatus.permanentlyDenied) {
       emit(LocationPermissionPermanentlyDenied());
-      print(3);
       return;
     }
 
     if (permission == LocationPermissionStatus.granted) {
-      final location = await locationService.getCurrentLocation();
-      await _emitLocationUpdate(emit: emit, location: location);
+      emit(LocationPermissionGranted());
     }
   }
 
@@ -59,6 +55,7 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   ) async {
     final status = await locationService.requestPermission();
     if (status == LocationPermissionStatus.granted) {
+      emit(LocationPermissionGranted());
       final location = await locationService.getCurrentLocation();
       await _emitLocationUpdate(emit: emit, location: location);
     }
@@ -69,6 +66,14 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     if (status == LocationPermissionStatus.permanentlyDenied) {
       emit(LocationPermissionPermanentlyDenied());
     }
+  }
+
+  Future<void> _onGetLocation(
+    GetLocationEvent event,
+    Emitter<LocationState> emit,
+  ) async {
+    final location = await locationService.getCurrentLocation();
+    await _emitLocationUpdate(emit: emit, location: location);
   }
 
   Future<void> _onStartTracking(
@@ -108,7 +113,9 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
         ),
       );
     } catch (e) {
-      emit(LocationError('Error retrieving location'));
+      if (!emit.isDone) {
+        emit(LocationError('Error retrieving location'));
+      }
     }
   }
 
