@@ -1,7 +1,10 @@
+import 'package:delivery/core/core.dart';
+import 'package:delivery/domain/services/location_service.dart';
 import 'package:flutter/material.dart';
 
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   static const String routePath = '/login';
@@ -27,7 +30,6 @@ class LoginPage extends StatelessWidget {
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                // crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
@@ -65,12 +67,20 @@ class LoginPage extends StatelessWidget {
                 ],
               ),
               const SizedBox(height: 30),
-              // AuthFormButton(text: 'Log In', onPressed: () {
-              //   AppNavigation().pushNamed(LocationPermissionPage.routeName);
-              // }),
-              AppButton(text: 'log in', onPressed: (){
-                AppNavigation().pushNamed(LocationPermissionPage.routeName);
-              }),
+              AppButton(
+                text: 'log in',
+                onPressed: () async {
+                  final status =
+                      await locator<LocationService>().checkPermission();
+                  if (status != LocationPermissionStatus.granted) {
+                    return AppNavigation().pushNamed(
+                      LocationPermissionPage.routeName,
+                    );
+                  }
+                  context.read<LocationBloc>().add(GetLocationEvent());
+                  AppNavigation().replaceNamed(HomePage.routeName);
+                },
+              ),
               const SizedBox(height: 30),
               // Spacer(),
               Row(

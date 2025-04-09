@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:delivery/core/core.dart';
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
+import 'package:delivery/infrastructure/infrastructure.dart';
 
 class SplashPage extends StatelessWidget {
   static const String routePath = '/splash';
@@ -11,7 +12,11 @@ class SplashPage extends StatelessWidget {
   const SplashPage({super.key});
 
   void _redirect(BuildContext context) {
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () async {
+      final isOnboardingComplete = await SharedPreferenceService().readBool(Keys.onBoardingCompleteKey) ?? false;
+      if(isOnboardingComplete) {
+        return AppNavigation().replaceNamed(LoginPage.routeName);
+      }
       AppNavigation().replaceNamed(OnboardingPage.routeName);
     });
   }

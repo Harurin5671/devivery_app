@@ -21,11 +21,6 @@ class GeolocatorService implements LocationService {
   @override
   Future<LocationData> getCurrentLocation() async {
     final position = await Geolocator.getCurrentPosition();
-    // final address = await getAddressFromCoordinates(
-    //   position.latitude,
-    //   position.longitude,
-    // );
-    // print('Address: $address');
     return LocationData(
       latitude: position.latitude,
       longitude: position.longitude,

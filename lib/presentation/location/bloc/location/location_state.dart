@@ -2,7 +2,7 @@ part of 'location_bloc.dart';
 
 sealed class LocationState extends Equatable {
   const LocationState();
-  
+
   @override
   List<Object?> get props => [];
 }
@@ -31,6 +31,8 @@ final class LocationPermissionDenied extends LocationState {}
 final class LocationPermissionPermanentlyDenied extends LocationState {}
 
 final class LocationServiceDisabled extends LocationState {}
+
+final class LocationPermissionGranted extends LocationState {}
 
 final class LocationError extends LocationState {
   final String message;

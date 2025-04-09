@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:delivery/core/core.dart';
 import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
-// import 'package:delivery/domain/domain.dart';
-// import 'package:delivery/infrastructure/infrastructure.dart';
+import 'package:delivery/infrastructure/infrastructure.dart';
 
 class LocationPermissionPage extends StatelessWidget {
   static const String routePath = '/location_permission';
@@ -16,7 +16,10 @@ class LocationPermissionPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<LocationBloc, LocationState>(
       listener: (context, state) {
-        print('State: $state');
+        if (state is LocationInitial) {
+          context.read<LocationBloc>().add(CheckLocationStatusEvent());
+        }
+
         if (state is LocationPermissionDenied) {
           ScaffoldMessenger.of(
             context,
@@ -35,13 +38,8 @@ class LocationPermissionPage extends StatelessWidget {
           );
         }
 
-        if (state is LocationLoaded) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Ubicación obtenida: ${state.address}')),
-          );
-
-          // Aquí podrías redirigir a la home o siguiente paso
-          // AppNavigation(router: appRouter).replaceNamed(HomePage.routeName);
+        if (state is LocationPermissionGranted) {
+          AppNavigation().replaceNamed(HomePage.routeName);
         }
       },
       child: Scaffold(
@@ -65,13 +63,27 @@ class LocationPermissionPage extends StatelessWidget {
                   iconPosition: AppButtonIconPosition.right,
                   text: 'Access Location',
                   onPressed: () async {
-                    // final status = await GeolocatorService().requestPermission();
-                    // if(status == LocationPermissionStatus.granted) {
-                    //   // final location = await GeolocatorService().getCurrentLocation();
-                    //   // final address = await GeolocatorService().getAddressFromCoordinates(location.latitude, location.longitude);
-                    // }
-                    context.read<LocationBloc>().add(
-                      CheckLocationStatusEvent(),
+                    // final bloc = context.read<LocationBloc>();
+                    // await SharedPreferenceService().writeBool(Keys.onBoardingCompleteKey, true);
+                    // bloc.add(
+                    //   RequestLocationPermissionEvent(),
+                    // );
+                    await safelyExecuteWithContext(
+                      context: context,
+                      actions: [
+                        () => SharedPreferenceService().writeBool(
+                          Keys.onBoardingCompleteKey,
+                          true,
+                        ),
+                        () async => await Future.delayed(
+                          Duration(milliseconds: 300),
+                        ), // otra async si necesitas
+                      ],
+                      onSafeContextUse: (ctx) {
+                        ctx.read<LocationBloc>().add(
+                          RequestLocationPermissionEvent(),
+                        );
+                      },
                     );
                   },
                 ),

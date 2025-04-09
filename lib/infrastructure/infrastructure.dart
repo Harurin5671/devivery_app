@@ -1,1 +1,1 @@
-export 'services/geolocator_service.dart';
+export 'services/services.dart';

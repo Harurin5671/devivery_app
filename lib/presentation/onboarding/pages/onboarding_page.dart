@@ -20,8 +20,6 @@ class OnboardingPage extends StatelessWidget {
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.only(
-              // top: 100,
-              // bottom: 40,
               left: 24,
               right: 24,
             ),
