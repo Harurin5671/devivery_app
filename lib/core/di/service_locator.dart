@@ -17,4 +17,11 @@ void setupServiceLocator() {
   locator.registerLazySingleton<LocationBloc>(
     () => LocationBloc(locator<LocationService>()),
   );
+  
+  locator.registerLazySingleton<AuthBloc>(
+    () => AuthBloc(
+      locationService: locator<LocationService>(),
+      locationBloc: locator<LocationBloc>(),
+    ),
+  );
 }

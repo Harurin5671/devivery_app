@@ -13,18 +13,6 @@ class AuthFormButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ElevatedButton(
       onPressed: onPressed,
-      style: ButtonStyle(
-        backgroundColor: WidgetStatePropertyAll(Color(0xFFFF7622)),
-        foregroundColor: WidgetStatePropertyAll(Colors.white),
-        shape: WidgetStatePropertyAll(
-          RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(12),
-          ),
-        ),
-        minimumSize: WidgetStatePropertyAll(
-          Size(double.infinity, 62),
-        ),
-      ),
       child: Text(
         text.toUpperCase(),
         style: TextStyle(

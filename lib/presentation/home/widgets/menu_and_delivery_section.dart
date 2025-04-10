@@ -39,7 +39,6 @@ class DeliveryLocation extends StatelessWidget {
         BlocBuilder<LocationBloc, LocationState>(
           builder: (context, state) {
             // (1) Elegimos cuál widget mostramos según el estado
-            print('State: $state');
             Widget child;
             if (state is LocationLoaded) {
               child = Row(
@@ -47,8 +46,8 @@ class DeliveryLocation extends StatelessWidget {
                 children: [
                   Text(
                     state.address,
-                    style: const TextStyle(
-                      fontSize: 14,
+                    style: TextStyle(
+                      fontSize: state.address.length > 22 ? 10 : 14,
                       color: Color(0xFF676767),
                     ),
                   ),

@@ -74,7 +74,8 @@ class OnboardingNextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<OnboardingBloc, OnboardingState>(
       builder: (context, state) {
-        return ElevatedButton(
+        return AppButton(
+          text: state.currentIndex == slides.length - 1 ? 'Get Started' : 'Next',
           onPressed: () {
             if (state.currentIndex == slides.length - 1) {
               AppNavigation().replaceNamed(LoginPage.routeName);
@@ -82,24 +83,24 @@ class OnboardingNextButton extends StatelessWidget {
               context.read<OnboardingBloc>().add(NextSlideEvent());
             }
           },
-          style: ButtonStyle(
-            backgroundColor: WidgetStatePropertyAll<Color>(Color(0xFFFF7622)),
-            minimumSize: WidgetStatePropertyAll<Size>(
-              const Size(double.infinity, 62),
-            ),
-            shape: WidgetStatePropertyAll<OutlinedBorder>(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-            ),
-          ),
-          child: Text(
-            state.currentIndex == slides.length - 1 ? 'Get Started' : 'Next',
-            style: TextStyle(
-              color: Colors.white,
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
         );
+        // ElevatedButton(
+        //   onPressed: () {
+        //     if (state.currentIndex == slides.length - 1) {
+        //       AppNavigation().replaceNamed(LoginPage.routeName);
+        //     } else {
+        //       context.read<OnboardingBloc>().add(NextSlideEvent());
+        //     }
+        //   },
+        //   child: Text(
+        //     state.currentIndex == slides.length - 1 ? 'Get Started' : 'Next',
+        //     style: TextStyle(
+        //       color: Colors.white,
+        //       fontSize: 14,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // );
       },
     );
   }

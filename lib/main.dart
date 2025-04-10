@@ -21,9 +21,13 @@ class MyApp extends StatelessWidget {
       const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
     );
     return MultiBlocProvider(
-      providers: [BlocProvider(create: (context) => locator<LocationBloc>()..add(CheckLocationStatusEvent()))],
+      providers: [
+        BlocProvider(create: (context) => locator<LocationBloc>()),
+        BlocProvider(create: (context) => locator<AuthBloc>()),
+      ],
       child: MaterialApp.router(
         debugShowCheckedModeBanner: false,
+        theme: AppTheme.appThemeLight,
         routerConfig: appRouter,
       ),
     );

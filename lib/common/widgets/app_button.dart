@@ -9,12 +9,22 @@ class AppButton extends StatelessWidget {
     required this.onPressed,
     this.icon,
     this.iconPosition = AppButtonIconPosition.left,
+    this.backgroundColor,
+    this.foregroundColor,
+    this.minimumSize,
+    this.padding,
   });
 
   final String text;
   final VoidCallback onPressed;
   final IconData? icon;
   final AppButtonIconPosition iconPosition;
+
+  // — Personalización opcional —
+  final Color? backgroundColor;
+  final Color? foregroundColor;
+  final Size? minimumSize;
+  final EdgeInsetsGeometry? padding;
 
   @override
   Widget build(BuildContext context) {
@@ -27,16 +37,17 @@ class AppButton extends StatelessWidget {
       ),
     );
 
-    final iconWidget = icon != null
-        ? Container(
-          width: 32,
-          height: 32,
-          decoration: BoxDecoration(
-            color: Color(0xFFff914e),
-            shape: BoxShape.circle,
-          ),
-          child: Icon(icon, color: Colors.white, size: 18))
-        : null;
+    final iconWidget = icon == null
+        ? null
+        : Container(
+            width: 32,
+            height: 32,
+            decoration: const BoxDecoration(
+              color: Color(0xFFFF914E),
+              shape: BoxShape.circle,
+            ),
+            child: Icon(icon, color: Colors.white, size: 18),
+          );
 
     final children = <Widget>[
       if (iconWidget != null && iconPosition == AppButtonIconPosition.left)
@@ -49,16 +60,18 @@ class AppButton extends StatelessWidget {
         iconWidget,
     ];
 
+    final defaultStyle = Theme.of(context).elevatedButtonTheme.style;
+
+    final localStyle = ElevatedButton.styleFrom(
+      backgroundColor: backgroundColor,
+      foregroundColor: foregroundColor,
+      minimumSize: minimumSize,
+      padding: padding,
+    );
+
     return ElevatedButton(
       onPressed: onPressed,
-      style: ElevatedButton.styleFrom(
-        backgroundColor: const Color(0xFFFF7622),
-        foregroundColor: Colors.white,
-        minimumSize: const Size(double.infinity, 62),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
+      style: localStyle.merge(defaultStyle), // ← 1) toma lo que pases; 2) completa con el tema
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,

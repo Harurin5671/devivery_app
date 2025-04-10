@@ -11,8 +11,8 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(50),
-        child: AppBar(backgroundColor: Colors.transparent, elevation: 0),
+        preferredSize: const Size.fromHeight(30),
+        child: AppBar(backgroundColor: Colors.white, elevation: 0),
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),

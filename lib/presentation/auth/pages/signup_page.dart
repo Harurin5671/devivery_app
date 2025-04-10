@@ -20,21 +20,31 @@ class SignupPage extends StatelessWidget {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              LabeledInputField(label: 'name'),
+              LabeledInputField(label: 'name', hintText: 'John Doe'),
               const SizedBox(height: 24),
               LabeledInputField(
                 label: 'email',
+                hintText: 'example@gmail.com',
                 type: TextInputType.emailAddress,
               ),
               const SizedBox(height: 24),
-              LabeledInputField(label: 'password', obscureText: true),
+              LabeledInputField(
+                label: 'password',
+                hintText: '* * * * * * * *',
+                obscureText: true),
               const SizedBox(height: 24),
-              LabeledInputField(label: 're-type password', obscureText: true),
-              const SizedBox(height: 30,),
+              LabeledInputField(
+                label: 're-type password',
+                hintText: '* * * * * * * *',
+                obscureText: true),
+              const SizedBox(height: 30),
               // AuthFormButton(text: 'Sign up', onPressed: () {}),
-               AppButton(text: 'Sign Up', onPressed: (){
-                // AppNavigation().pushNamed(LocationPermissionPage.routeName);
-              }),
+              AppButton(
+                text: 'Sign Up',
+                onPressed: () {
+                  // AppNavigation().pushNamed(LocationPermissionPage.routeName);
+                },
+              ),
             ],
           ),
         ),

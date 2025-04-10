@@ -21,6 +21,27 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
   Stream<LocationData>? _locationStream;
   StreamSubscription<LocationData>? _subscription;
 
+  // ──────────────────────────────────────────────────────
+  // GETTERS DE LECTURA (COMODIDAD)
+  // ──────────────────────────────────────────────────────
+
+  /// `true` si el permiso ya está concedido
+  bool get hasPermissionGranted =>
+      state is LocationPermissionGranted || state is LocationLoaded;
+
+  /// `true` si ya tenemos coordenadas y dirección
+  bool get hasLocation => state is LocationLoaded;
+
+  /// Latitud actual (o `null` si aún no la hay)
+  double? get latitude =>
+      state is LocationLoaded ? (state as LocationLoaded).latitude : null;
+
+  double? get longitude =>
+      state is LocationLoaded ? (state as LocationLoaded).longitude : null;
+
+  String? get address =>
+      state is LocationLoaded ? (state as LocationLoaded).address : null;
+
   Future<void> _onCheckStatus(
     CheckLocationStatusEvent event,
     Emitter<LocationState> emit,
@@ -33,7 +54,6 @@ class LocationBloc extends Bloc<LocationEvent, LocationState> {
     }
 
     final permission = await locationService.checkPermission();
-    print('Permission: $permission');
     if (permission == LocationPermissionStatus.denied) {
       emit(LocationPermissionDenied());
       return;
