@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:delivery/core/core.dart';
+import 'package:delivery/common/common.dart';
 import 'package:delivery/presentation/presentation.dart';
 
 void main() {
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
     );
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => locator<LocationBloc>()),
+        BlocProvider(create: (context) => locator<LocationBloc>()..add(CheckLocationStatusEvent())),
         BlocProvider(create: (context) => locator<AuthBloc>()),
       ],
       child: MaterialApp.router(

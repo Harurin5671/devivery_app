@@ -1,3 +1,3 @@
-export 'home_header.dart';
-export 'menu_and_delivery_section.dart';
-export 'shopping_cart_button.dart';
+export 'header_section/header_section.dart';
+export 'search_section/search_section.dart';
+export 'category_section/category_section.dart';

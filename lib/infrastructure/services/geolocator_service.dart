@@ -15,7 +15,7 @@ class GeolocatorService implements LocationService {
   Future<String> getAddressFromCoordinates(double lat, double lng) async {
     final placemarks = await placemarkFromCoordinates(lat, lng);
     final place = placemarks.first;
-    return '${place.street}, ${place.locality}';
+    return '${place.street}';
   }
 
   @override

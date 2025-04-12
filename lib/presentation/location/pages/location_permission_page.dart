@@ -20,11 +20,7 @@ class LocationPermissionPage extends StatelessWidget {
           context.read<LocationBloc>().add(CheckLocationStatusEvent());
         }
 
-        if (state is LocationPermissionDenied) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Permiso denegado')));
-        }
+        if (state is LocationPermissionDenied) {}
 
         if (state is LocationPermissionPermanentlyDenied) {
           ScaffoldMessenger.of(context).showSnackBar(

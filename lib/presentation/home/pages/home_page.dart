@@ -10,13 +10,17 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(30),
-        child: AppBar(backgroundColor: Colors.white, elevation: 0),
-      ),
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(children: [HomeHeader(), Text('hola')]),
+        padding: const EdgeInsets.only(top: 50),
+        child: Column(
+          children: [
+            HomeHeader(),
+            const SizedBox(height: 24),
+            HomeSearch(),
+            const SizedBox(height: 32),
+            HomeCategory(),
+          ],
+        ),
       ),
     );
   }

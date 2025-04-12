@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -11,23 +13,32 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final LocationService locationService;
   final LocationBloc locationBloc;
 
-  AuthBloc({required this.locationService, required this.locationBloc}) : super(AuthInitial()) {
+  AuthBloc({required this.locationService, required this.locationBloc})
+    : super(AuthInitial()) {
     on<AuthLoginEvent>(_onLogin);
     on<AuthSignupEvent>(_onSignup);
     on<AuthLogoutEvent>(_onLogout);
   }
   Future<void> _onLogin(AuthLoginEvent event, Emitter<AuthState> emit) async {
     emit(AuthLoading());
+    locationBloc.add(CheckLocationStatusEvent());
     try {
       final email = event.email;
       final password = event.password;
-      if(email.isEmpty || password.isEmpty) {
+      log('Location status1: ${locationBloc.state}');
+      if (email.isEmpty || password.isEmpty) {
         emit(AuthFailure('Please fill all the fields'));
         return;
       }
-      locationBloc.add(CheckLocationStatusEvent());
+      if (locationBloc.state is LocationPermissionDenied) {
+        emit(AuthPermissionRequired());
+        return;
+      }
       if (locationBloc.state is LocationPermissionGranted) {
+        locationBloc.add(CheckLocationStatusEvent());
+        log('Location status2: ${locationBloc.state}');
         locationBloc.add(GetLocationEvent());
+        emit(AuthAuthenticated());
       }
     } catch (e) {
       emit(AuthFailure(e.toString()));
