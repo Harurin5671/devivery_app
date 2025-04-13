@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,17 +20,10 @@ class LoginPage extends StatelessWidget {
         listeners: [
           BlocListener<LocationBloc, LocationState>(
             listener: (context, state) {
-              log('----------------------- State: $state');
-              // if (state is LocationPermissionDenied) {
-              //   return AppNavigation().pushNamed(
-              //     LocationPermissionPage.routeName,
-              //   );
-              // }
             },
           ),
           BlocListener<AuthBloc, AuthState>(
             listener: (context, state) {
-              log('----------------------- State Auth: $state');
               if (state is AuthFailure) {
                 return AlertHelper.showSnackBar(
                   context,
@@ -46,7 +37,7 @@ class LoginPage extends StatelessWidget {
                 );
               }
               if (state is AuthAuthenticated) {
-                return AppNavigation().pushNamed(HomePage.routeName);
+                return AppNavigation().pushNamed(DashboardPage.routeName);
               }
             },
           ),

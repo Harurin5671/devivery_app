@@ -1,10 +1,12 @@
 {
-    "cSpell.words": [
-        "asincrónicas",
-        "cupertino",
-        "DFOOD",
-        "placemarks",
-        "prefs"
-    ],
-    "cSpell.language": "en,es-ES"
+  "cSpell.words": [
+    "asincrónicas",
+    "cupertino",
+    "DFOOD",
+    "kotlin",
+    "placemarks",
+    "prefs"
+  ],
+  "cSpell.language": "en,es-ES",
+  "dart.flutterSdkPath": ".fvm/versions/3.29.2"
 }

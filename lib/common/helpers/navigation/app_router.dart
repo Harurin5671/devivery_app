@@ -26,5 +26,6 @@ final GoRouter appRouter = GoRouter(
       name: HomePage.routeName,
       builder: (context, state) => const HomePage(),
     ),
+    ...sellerRoutes,
   ],
 );

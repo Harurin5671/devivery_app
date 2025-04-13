@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,7 +23,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     try {
       final email = event.email;
       final password = event.password;
-      log('Location status1: ${locationBloc.state}');
       if (email.isEmpty || password.isEmpty) {
         emit(AuthFailure('Please fill all the fields'));
         return;
@@ -36,7 +33,6 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       }
       if (locationBloc.state is LocationPermissionGranted) {
         locationBloc.add(CheckLocationStatusEvent());
-        log('Location status2: ${locationBloc.state}');
         locationBloc.add(GetLocationEvent());
         emit(AuthAuthenticated());
       }
